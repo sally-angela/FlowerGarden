@@ -14,7 +14,7 @@ import com.sally.flowergarden.viewmodel.FlowerViewModel
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: FlowerViewModel
-    private val homeAdapter  = HomeAdapter(arrayListOf())
+    private val homeAdapter = HomeAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
