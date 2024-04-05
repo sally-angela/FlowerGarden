@@ -87,7 +87,7 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="36dp"
         android:text="CREATE ACCOUNT"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
