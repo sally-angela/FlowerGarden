@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         val ID = "ID"
         val USERNAME = "USERNAME"
+        val EMAIL = "EMAIL"
         val FIRSTNAME = "FIRSTNAME"
         val LASTNAME = "LASTNAME"
         val PASSWORD = "PASSWORD"
@@ -48,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
             if(username != "" && password != "") {
                 viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-                viewModel.fetch(username, password)
+                viewModel.login(username, password)
 
                 observeViewModel()
             }
@@ -67,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.userLD.observe(this, Observer {
             sharedEditor.putInt(ID, viewModel.userLD.value?.id ?: -1)
             sharedEditor.putString(USERNAME, viewModel.userLD.value?.username)
+            sharedEditor.putString(EMAIL, viewModel.userLD.value?.email)
             sharedEditor.putString(FIRSTNAME, viewModel.userLD.value?.firstName)
             sharedEditor.putString(LASTNAME, viewModel.userLD.value?.lastName)
             sharedEditor.putString(PASSWORD, viewModel.userLD.value?.password)

@@ -18,9 +18,29 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
-    fun fetch(username: String, password: String) {
+    fun login(username: String, password: String) {
         queue = Volley.newRequestQueue(getApplication())
         val url = "https://icfubaya2023.com/user?username=$username&password=$password"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            {
+                val sType = object : TypeToken<User>() { }.type
+                val result = Gson().fromJson<User>(it, sType)
+                userLD.value = result as User?
+                Log.d("showvoley", it)
+            },
+            {
+                Log.d("showvoley", it.toString())
+            })
+        stringRequest.tag = TAG
+        queue?.add(stringRequest)
+    }
+
+    fun signUp(username: String, email: String, firstName: String, lastName: String, password: String, images: String) {
+        queue = Volley.newRequestQueue(getApplication())
+        val url = "https://icfubaya2023.com/newuser?username=$username&email=$email&firstName=$firstName" +
+                  "&lastName=$lastName&password=$password&images=$images"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,

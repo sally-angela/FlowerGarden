@@ -148,7 +148,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
                     android:layout_marginEnd="36dp"
+                    android:layout_marginBottom="50dp"
                     android:text="Edit Profile"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtOldPass" />
 
@@ -159,6 +161,7 @@
                     android:layout_marginTop="18dp"
                     android:layout_marginEnd="18dp"
                     android:clickable="true"
+                    android:contentDescription="Logout"
                     android:src="@drawable/baseline_logout_24"
                     app:backgroundTint="#B286FF"
                     app:layout_constraintEnd_toEndOf="parent"
