@@ -14,6 +14,7 @@ import com.sally.flowergarden.model.User
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     val userLD = MutableLiveData<User>()
+    val statusLD = MutableLiveData<String>()
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
@@ -45,9 +46,9 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
-                val sType = object : TypeToken<User>() { }.type
-                val result = Gson().fromJson<User>(it, sType)
-                userLD.value = result as User?
+                val sType = object : TypeToken<String>() { }.type
+                val result = Gson().fromJson<String>(it, sType)
+                statusLD.value = result
                 Log.d("showvoley", it)
             },
             {

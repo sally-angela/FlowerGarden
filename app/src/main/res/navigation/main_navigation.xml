@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.sally.flowergarden.view.DetailFragment"
-        android:label="fragment_detail"
+        android:label="Detail"
         tools:layout="@layout/fragment_detail" />
     <fragment
         android:id="@+id/itemProfile"

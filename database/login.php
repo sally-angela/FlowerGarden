@@ -3,8 +3,10 @@ error_reporting(E_ERROR | E_PARSE);
 $c = new mysqli("localhost", "root", "", "flowergarden");
 
 if ($c->connect_errno) {
-    $arrayerror = array('result' => 'ERROR',
-        'msg' => 'Failed to connect DB');
+    $arrayerror = array(
+        'result' => 'ERROR',
+        'msg' => 'Failed to connect DB'
+    );
     echo json_encode($arrayerror);
     die();
 }
