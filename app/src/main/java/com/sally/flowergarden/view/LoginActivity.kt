@@ -43,15 +43,14 @@ class LoginActivity : AppCompatActivity() {
             this.finish()
         }
 
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         binding.btnLogin.setOnClickListener {
             var username = binding.txtUsername.editText?.text.toString()
             var password = binding.txtPassword.editText?.text.toString()
 
             if(username != "" && password != "") {
-                viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
                 viewModel.login(username, password)
-
-                observeViewModel()
             }
             else {
                 Toast.makeText(this, "Username dan Password cannot be empty", Toast.LENGTH_SHORT).show()
@@ -62,6 +61,8 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
+
+        observeViewModel()
     }
 
     fun observeViewModel(){
@@ -75,8 +76,7 @@ class LoginActivity : AppCompatActivity() {
             sharedEditor.putString(IMAGE, viewModel.userLD.value?.images)
             sharedEditor.apply()
 
-            var checkLogin = shared.getInt("ID", -1)
-            if(checkLogin != -1) {
+            if(viewModel.userLD.value != null) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 this.finish()

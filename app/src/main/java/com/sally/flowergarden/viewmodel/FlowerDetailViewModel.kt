@@ -12,34 +12,26 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sally.flowergarden.model.Flower
 
-class FlowerViewModel(application: Application): AndroidViewModel(application) {
-    val flowersLD = MutableLiveData<ArrayList<Flower>>()
-    val flowerLoadErrorLD = MutableLiveData<Boolean>()
-    val loadingLD = MutableLiveData<Boolean>()
+class FlowerDetailViewModel(application: Application): AndroidViewModel(application) {
+    val flowerLD = MutableLiveData<Flower>()
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
-    fun refresh() {
-        flowerLoadErrorLD.value = false
-        loadingLD.value = true
-
+    fun fetch(flowerId: Int) {
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/flower"
+        val url = "https://icfubaya2023.com/flower?id=$flowerId"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
-                val sType = object : TypeToken<List<Flower>>() { }.type
-                val result = Gson().fromJson<List<Flower>>(it, sType)
-                flowersLD.value = result as ArrayList<Flower>?
-                loadingLD.value = false
+                val sType = object : TypeToken<Flower>() { }.type
+                val result = Gson().fromJson<Flower>(it, sType)
+                flowerLD.value = result as Flower?
                 Log.d("showvoley", it)
             },
             {
                 Log.d("showvoley", it.toString())
-                flowerLoadErrorLD.value = false
-                loadingLD.value = false
             })
         stringRequest.tag = TAG
         queue?.add(stringRequest)

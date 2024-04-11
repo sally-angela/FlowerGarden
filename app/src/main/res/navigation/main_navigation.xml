@@ -20,7 +20,11 @@
         android:id="@+id/detailFragment"
         android:name="com.sally.flowergarden.view.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="flower_id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/itemProfile"
         android:name="com.sally.flowergarden.view.ProfileFragment"

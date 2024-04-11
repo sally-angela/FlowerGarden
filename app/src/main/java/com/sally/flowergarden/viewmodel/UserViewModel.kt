@@ -15,6 +15,7 @@ import com.sally.flowergarden.model.User
 class UserViewModel(application: Application): AndroidViewModel(application) {
     val userLD = MutableLiveData<User>()
     val statusLD = MutableLiveData<String>()
+    val statusEditLD = MutableLiveData<String>()
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
@@ -49,6 +50,26 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
                 val sType = object : TypeToken<String>() { }.type
                 val result = Gson().fromJson<String>(it, sType)
                 statusLD.value = result
+                Log.d("showvoley", it)
+            },
+            {
+                Log.d("showvoley", it.toString())
+            })
+        stringRequest.tag = TAG
+        queue?.add(stringRequest)
+    }
+
+    fun editProfile(firstName: String, lastName: String, password: String, id: Int) {
+        queue = Volley.newRequestQueue(getApplication())
+        val url = "https://icfubaya2023.com/editprofile?firstName=$firstName&lastName=$lastName" +
+                  "&password=$password&id=$id"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            {
+                val sType = object : TypeToken<String>() { }.type
+                val result = Gson().fromJson<String>(it, sType)
+                statusEditLD.value = result
                 Log.d("showvoley", it)
             },
             {

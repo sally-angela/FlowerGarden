@@ -18,6 +18,8 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         binding.btnSignUp.setOnClickListener {
             var username = binding.txtNewUsername.editText?.text.toString()
             var email = binding.txtEmail.editText?.text.toString()
@@ -30,11 +32,8 @@ class SignUpActivity : AppCompatActivity() {
             if(password != rePassword) {
                 Toast.makeText(this, "Password and Confirm Password not match", Toast.LENGTH_SHORT).show()
             }
-            else if(username != "" && email != "" && firstName != "" && lastName != "" && password != "") {
-                viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+            else if(username != "" && email != "" && firstName != "" && lastName != "" && password != "" && images != "") {
                 viewModel.signUp(username, email, firstName, lastName, password, images)
-
-                observeViewModel()
             }
             else {
                 Toast.makeText(this, "All data cannot be empty", Toast.LENGTH_SHORT).show()
@@ -46,6 +45,8 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
+
+        observeViewModel()
     }
 
     fun observeViewModel(){

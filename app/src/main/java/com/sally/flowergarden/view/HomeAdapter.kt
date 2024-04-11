@@ -34,7 +34,7 @@ class HomeAdapter (val flowerList:ArrayList<Flower>)
         builder.build().load(url).into(holder.binding.imgFlower)
 
         holder.binding.btnRead.setOnClickListener {
-            val action = HomeFragmentDirections.actionDetailFragment()
+            val action = HomeFragmentDirections.actionDetailFragment(flowerList[position].id ?: 0)
             Navigation.findNavController(it).navigate(action)
         }
     }
