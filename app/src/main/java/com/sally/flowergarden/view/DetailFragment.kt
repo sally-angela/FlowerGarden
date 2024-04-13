@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.sally.flowergarden.databinding.FragmentDetailBinding
@@ -31,7 +33,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(arguments != null){
+        if(arguments != null) {
             val flowerId = DetailFragmentArgs.fromBundle(requireArguments()).flowerId
             viewModel = ViewModelProvider(this).get(FlowerDetailViewModel::class.java)
             viewModel.fetch(flowerId)
@@ -42,15 +44,44 @@ class DetailFragment : Fragment() {
 
     fun observeViewModel(){
         viewModel.flowerLD.observe(viewLifecycleOwner, Observer {
+            var paragraphCount = viewModel.flowerLD.value?.paragraphs?.size ?: 0
+            var currentParagraph = 0;
+
             binding.txtTitleDetail.setText(viewModel.flowerLD.value?.title)
             binding.txtAuthorDetail.setText(viewModel.flowerLD.value?.author)
-            binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.first())
+            if(paragraphCount > 0) {
+                binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.first())
+                currentParagraph = 1;
+            }
+            else{
+                binding.txtParagraph.setText("This article has no paragraph.")
+            }
 
             var url = viewModel.flowerLD.value?.images
             val builder = Picasso.Builder(requireContext())
             builder.listener { picasso, uri, exception ->
                 exception.printStackTrace() }
             builder.build().load(url).into(binding.imgFlowerDetail)
+
+            binding.btnPrev.setOnClickListener {
+                if(currentParagraph > 1) {
+                    binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.get(currentParagraph-2))
+                    currentParagraph--
+                }
+                else {
+                    Toast.makeText(requireContext(), "This is the first paragraph", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            binding.btnNext.setOnClickListener {
+                if(currentParagraph < paragraphCount) {
+                    binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.get(currentParagraph))
+                    currentParagraph++
+                }
+                else {
+                    Toast.makeText(requireContext(), "This is the last paragraph", Toast.LENGTH_SHORT).show()
+                }
+            }
         })
     }
 }

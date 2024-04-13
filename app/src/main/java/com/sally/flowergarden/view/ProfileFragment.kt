@@ -48,8 +48,6 @@ class ProfileFragment : Fragment() {
             exception.printStackTrace() }
         builder.build().load(imageURL).into(binding.imgProfile)
 
-        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
         binding.btnEditProfile.setOnClickListener {
             var id = shared.getInt(LoginActivity.ID, -1)
             var password = shared.getString(LoginActivity.PASSWORD, "")
@@ -60,12 +58,15 @@ class ProfileFragment : Fragment() {
             var newPass = binding.txtNewPass.editText?.text.toString()
             var reNewPass = binding.txtReNewPass.editText?.text.toString()
 
-            if(newPass != reNewPass) {
-                Toast.makeText(requireContext(), "New Password and Confirm New Password not match", Toast.LENGTH_SHORT).show()
-            }
-            else if(firstName != "" && lastName != "" && oldPass != "" && newPass != "" && reNewPass != "") {
-                if(oldPass == password) {
+            if(firstName != "" && lastName != "" && oldPass != "" && newPass != "" && reNewPass != "") {
+                if(newPass != reNewPass) {
+                    Toast.makeText(requireContext(), "New Password and Confirm New Password not match", Toast.LENGTH_SHORT).show()
+                }
+                else if(oldPass == password) {
+                    viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
                     viewModel.editProfile(firstName, lastName, newPass, id)
+
+                    observeViewModel()
                 }
                 else {
                     Toast.makeText(requireContext(), "Wrong Old Password", Toast.LENGTH_SHORT).show()
@@ -74,6 +75,8 @@ class ProfileFragment : Fragment() {
             else {
                 Toast.makeText(requireContext(), "All data cannot be empty", Toast.LENGTH_SHORT).show()
             }
+
+            Log.d("piubtnedit", shared.getString(LoginActivity.PASSWORD, "").toString())
         }
 
         binding.btnLogout.setOnClickListener {
@@ -86,12 +89,12 @@ class ProfileFragment : Fragment() {
             sharedEditor.putString(LoginActivity.IMAGE, "")
             sharedEditor.apply()
 
+            Log.d("piulogout", shared.getString(LoginActivity.PASSWORD, "").toString())
+
             val intent = Intent(this.activity, LoginActivity::class.java)
             startActivity(intent)
             this.requireActivity().finish()
         }
-
-        observeViewModel()
     }
 
     fun observeViewModel(){
@@ -104,6 +107,8 @@ class ProfileFragment : Fragment() {
                 sharedEditor.putString(LoginActivity.LASTNAME, binding.txtLastName.editText?.text.toString())
                 sharedEditor.putString(LoginActivity.PASSWORD, binding.txtNewPass.editText?.text.toString())
                 sharedEditor.apply()
+
+                Log.d("piuobserve", shared.getString(LoginActivity.PASSWORD, "").toString())
             }
             else {
                 Toast.makeText(requireContext(), "Failed to Update Profile", Toast.LENGTH_SHORT).show()

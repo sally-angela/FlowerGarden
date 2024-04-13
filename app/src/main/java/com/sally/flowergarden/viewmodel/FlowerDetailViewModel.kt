@@ -20,14 +20,17 @@ class FlowerDetailViewModel(application: Application): AndroidViewModel(applicat
 
     fun fetch(flowerId: Int) {
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/flower?id=$flowerId"
+        val url = "https://icfubaya2023.com/flower"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
-                val sType = object : TypeToken<Flower>() { }.type
-                val result = Gson().fromJson<Flower>(it, sType)
-                flowerLD.value = result as Flower?
+                val sType = object : TypeToken<List<Flower>>() { }.type
+                val result = Gson().fromJson<List<Flower>>(it, sType)
+                val selectedFlower = result.find { it.id == flowerId }
+                selectedFlower?.let {
+                    flowerLD.value = it as Flower?
+                }
                 Log.d("showvoley", it)
             },
             {
