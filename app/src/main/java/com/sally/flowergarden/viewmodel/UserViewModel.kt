@@ -22,7 +22,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
 
     fun login(username: String, password: String) {
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/user?username=$username&password=$password"
+        val url = "https://flowergarden123.000webhostapp.com/user?username=$username&password=$password"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
@@ -41,7 +41,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
 
     fun signUp(username: String, email: String, firstName: String, lastName: String, password: String, images: String) {
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/newuser?username=$username&email=$email&firstName=$firstName" +
+        val url = "https://flowergarden123.000webhostapp.com/newuser?username=$username&email=$email&firstName=$firstName" +
                   "&lastName=$lastName&password=$password&images=$images"
 
         val stringRequest = StringRequest(
@@ -61,7 +61,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
 
     fun editProfile(firstName: String, lastName: String, password: String, id: Int) {
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/editprofile?firstName=$firstName&lastName=$lastName" +
+        val url = "https://flowergarden123.000webhostapp.com/editprofile?firstName=$firstName&lastName=$lastName" +
                   "&password=$password&id=$id"
 
         val stringRequest = StringRequest(

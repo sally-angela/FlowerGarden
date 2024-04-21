@@ -52,8 +52,9 @@ class DetailFragment : Fragment() {
             if(paragraphCount > 0) {
                 binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.first())
                 currentParagraph = 1;
+                binding.btnPrev.visibility = View.GONE
             }
-            else{
+            else {
                 binding.txtParagraph.setText("This article has no paragraph.")
             }
 
@@ -67,6 +68,13 @@ class DetailFragment : Fragment() {
                 if(currentParagraph > 1) {
                     binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.get(currentParagraph-2))
                     currentParagraph--
+
+                    if(currentParagraph == 1) {
+                        binding.btnPrev.visibility = View.GONE
+                    }
+                    if(currentParagraph > 1){
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
                 }
                 else {
                     Toast.makeText(requireContext(), "This is the first paragraph", Toast.LENGTH_SHORT).show()
@@ -77,6 +85,13 @@ class DetailFragment : Fragment() {
                 if(currentParagraph < paragraphCount) {
                     binding.txtParagraph.setText(viewModel.flowerLD.value?.paragraphs?.get(currentParagraph))
                     currentParagraph++
+
+                    if(currentParagraph < paragraphCount) {
+                        binding.btnPrev.visibility = View.VISIBLE
+                    }
+                    if(currentParagraph == paragraphCount) {
+                        binding.btnNext.visibility = View.GONE
+                    }
                 }
                 else {
                     Toast.makeText(requireContext(), "This is the last paragraph", Toast.LENGTH_SHORT).show()

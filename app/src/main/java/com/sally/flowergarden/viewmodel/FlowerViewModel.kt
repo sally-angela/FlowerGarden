@@ -25,7 +25,7 @@ class FlowerViewModel(application: Application): AndroidViewModel(application) {
         loadingLD.value = true
 
         queue = Volley.newRequestQueue(getApplication())
-        val url = "https://icfubaya2023.com/flower"
+        val url = "https://flowergarden123.000webhostapp.com/flower/flower.json"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
