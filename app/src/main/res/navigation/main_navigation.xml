@@ -14,7 +14,7 @@
             android:id="@+id/action_detail_fragment"
             app:destination="@id/detailFragment"
             app:popUpTo="@id/itemHome"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
