@@ -36,7 +36,6 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(arguments != null) {
-
             binding.flower = Flower("", "", "", "https://randomuser.me/api/portraits/flower/70.jpg")
             val flowerId = DetailFragmentArgs.fromBundle(requireArguments()).flowerId
 
