@@ -47,6 +47,12 @@ class HomeFragment : Fragment() {
     fun observeViewModel(){
         viewModel.flowersLD.observe(viewLifecycleOwner, Observer {
             homeAdapter.updateFlowerList(it)
+            if(it.isEmpty()) {
+                binding.recView?.visibility = View.GONE
+                binding.txtError.setText("Your flower still empty.")
+            } else {
+                binding.recView?.visibility = View.VISIBLE
+            }
         })
 
         viewModel.flowerLoadErrorLD.observe(viewLifecycleOwner, Observer {
